@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\StudentDetailController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -19,6 +20,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile/edit', [StudentDetailController::class, 'edit'])->name('student.profile.edit');
     Route::post('/profile/update', [StudentDetailController::class, 'update'])->name('student.profile.update');
     Route::post('/biodata/store', [StudentDetailController::class, 'store'])->name('biodata.store');
+    Route::patch('/dashboard/jenjang', [DashboardController::class, 'updateJenjang'])->name('jenjang.update');
 });
 
 
