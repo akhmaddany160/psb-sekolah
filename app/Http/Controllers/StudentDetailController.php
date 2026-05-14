@@ -41,9 +41,13 @@ class StudentDetailController extends Controller
             'nik'           => 'nullable|digits:16',
             'nisn'          => 'nullable|digits:10',
             'asal_sekolah'  => 'nullable|string',
+            'alamat'        => 'nullable|string',
         ]);
 
-        auth()->user()->studentDetail()->create($validated);
+        auth()->user()->studentDetail()->updateOrCreate(
+            ['user_id' => auth()->id()],
+            $validated
+        );
 
         return back()->with('success', 'Data biodata berhasil disimpan!');
     }

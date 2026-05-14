@@ -17,8 +17,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-    Route::get('/profile/edit', [StudentDetailController::class, 'edit'])->name('student.profile.edit');
-    Route::post('/profile/update', [StudentDetailController::class, 'update'])->name('student.profile.update');
+    Route::get('/biodata/edit', [StudentDetailController::class, 'edit'])->name('student.profile.edit');
+    Route::post('/biodata/update', [StudentDetailController::class, 'update'])->name('student.profile.update');
     Route::post('/biodata/store', [StudentDetailController::class, 'store'])->name('biodata.store');
     Route::patch('/dashboard/jenjang', [DashboardController::class, 'updateJenjang'])->name('jenjang.update');
 });
