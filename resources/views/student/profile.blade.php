@@ -1,49 +1,222 @@
 <x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Lengkapi Biodata Siswa') }}
-        </h2>
-    </x-slot>
+    <div style="padding: 40px 0; background-color: #ffffff; min-height: 100vh; font-family: sans-serif;">
+        <div style="width: 100%; max-width: 1200px; margin: 0 auto; padding: 0 24px; box-sizing: border-box;">
+            
+            @if (session('success'))
+                <div style="margin-bottom: 24px; padding: 16px; bg-color: #d1e7dd; color: #0f5132; border-radius: 12px; font-weight: bold;">
+                    {{ session('success') }}
+                </div>
+            @endif
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-6">
+            @php
+                $student = $detail instanceof \Illuminate\Support\Collection ? $detail->first() : $detail;
                 
-                @if (session('status'))
-                    <div class="mb-4 font-medium text-sm text-green-600">
-                        {{ session('status') }}
-                    </div>
-                @endif
+                function splitDateToFields($dateString) {
+                    if (empty($dateString)) return ['d' => '', 'm' => '', 'y' => ''];
+                    $time = strtotime($dateString);
+                    return [
+                        'd' => date('d', $time),
+                        'm' => date('m', $time),
+                        'y' => date('Y', $time)
+                    ];
+                }
 
-                <form method="POST" action="{{ route('student.profile.update') }}">
+                $siswa_date = splitDateToFields(old('tanggal_lahir', $student->tanggal_lahir ?? ''));
+                $ayah_date = splitDateToFields(old('tanggal_lahir_ayah', $student->tanggal_lahir_ayah ?? ''));
+                $ibu_date = splitDateToFields(old('tanggal_lahir_ibu', $student->tanggal_lahir_ibu ?? ''));
+            @endphp
+
+            <div style="background-color: #D9D9D9; border-radius: 30px; padding: 40px; color: #000000; box-sizing: border-box; width: 100%;">
+                <form method="POST" action="{{ route('biodata.store') }}">
                     @csrf
 
-                    <div>
-                        <x-input-label for="nisn" :value="__('NISN')" />
-                        <x-text-input id="nisn" name="nisn" type="text" class="mt-1 block w-full" :value="old('nisn', $detail->nisn ?? '')" required />
-                        <x-input-error class="mt-2" :messages="$errors->get('nisn')" />
+                    <div style="margin-bottom: 40px;">
+                        <h3 style="font-size: 24px; font-weight: 900; font-style: italic; margin-bottom: 24px; margin-top: 0;">A. Data Siswa</h3>
+                        
+                        <div style="display: flex; flex-direction: column; gap: 20px; width: 100%;">
+                            <div>
+                                <label style="display: block; font-size: 16px; font-weight: 700; margin-bottom: 8px;">Nama Lengkap</label>
+                                <input type="text" name="nama_lengkap" style="width: 100%; background-color: #ffffff; border: none; border-radius: 12px; padding: 14px 18px; font-size: 16px; box-sizing: border-box;" value="{{ old('nama_lengkap', $student->nama_lengkap ?? '') }}" required autofocus>
+                                <x-input-error :messages="$errors->get('nama_lengkap')" class="mt-1" />
+                            </div>
+
+                            <div style="display: flex; gap: 24px; flex-wrap: nowrap; align-items: flex-end; width: 100%; box-sizing: border-box;">
+                                <div style="flex: 4; min-width: 0;">
+                                    <label style="display: block; font-size: 16px; font-weight: 700; margin-bottom: 8px;">Tempat Lahir</label>
+                                    <input type="text" name="tempat_lahir" style="width: 100%; background-color: #ffffff; border: none; border-radius: 12px; padding: 14px 18px; font-size: 16px; box-sizing: border-box;" value="{{ old('tempat_lahir', $student->tempat_lahir ?? '') }}" required>
+                                </div>
+                                <div style="flex: 4; min-width: 0;">
+                                    <label style="display: block; font-size: 16px; font-weight: 700; margin-bottom: 8px;">Tanggal Lahir</label>
+                                    <div style="display: flex; gap: 12px; width: 100%;">
+                                        
+                                        <select name="birth_day" style="flex: 0.5; min-width: 0; text-align: center; padding: 14px 0 14px 12px; border: none; border-radius: 12px; font-weight: 700; font-size: 16px; background-color: white; cursor: pointer; -webkit-appearance: select; appearance: select;" required>
+                                            <option value="" disabled selected hidden>D</option>
+                                            @for ($d = 1; $d <= 31; $d++)
+                                                @php $val = sprintf('%02d', $d); @endphp
+                                                <option value="{{ $val }}" {{ old('birth_day', $siswa_date['d']) == $val ? 'selected' : '' }}>{{ $val }}</option>
+                                            @endfor
+                                        </select>
+
+                                        <select name="birth_month" style="flex: 0.5; min-width: 0; text-align: center; padding: 14px 0 14px 10px; border: none; border-radius: 12px; font-weight: 700; font-size: 16px; background-color: white; cursor: pointer; -webkit-appearance: select; appearance: select;" required>
+                                            <option value="" disabled selected hidden>M</option>
+                                            @for ($m = 1; $m <= 12; $m++)
+                                                @php $val = sprintf('%02d', $m); @endphp
+                                                <option value="{{ $val }}" {{ old('birth_month', $siswa_date['m']) == $val ? 'selected' : '' }}>{{ $val }}</option>
+                                            @endfor
+                                        </select>
+
+                                        <select name="birth_year" style="flex: 0.8; min-width: 0; text-align: center; padding: 14px 0 14px 8px; border: none; border-radius: 12px; font-weight: 700; font-size: 16px; background-color: white; cursor: pointer; -webkit-appearance: select; appearance: select;" required>
+                                            <option value="" disabled selected hidden>Y</option>
+                                            @for ($y = date('Y'); $y >= date('Y') - 40; $y--)
+                                                <option value="{{ $y }}" {{ old('birth_year', $siswa_date['y']) == $y ? 'selected' : '' }}>{{ $y }}</option>
+                                            @endfor
+                                        </select>
+
+                                    </div>
+                                </div>
+                                <div style="flex: 3; min-width: 0;">
+                                    <label style="display: block; font-size: 16px; font-weight: 700; margin-bottom: 8px;">Jenis Kelamin</label>
+                                    <select name="jenis_kelamin" style="width: 100%; background-color: #ffffff; border: none; border-radius: 12px; padding: 14px 18px; font-size: 16px; box-sizing: border-box; -webkit-appearance: select; appearance: select; cursor: pointer;" required>
+                                        <option value=""></option>
+                                        <option value="L" {{ (old('jenis_kelamin', $student->jenis_kelamin ?? '') == 'L') ? 'selected' : '' }}>Laki-laki</option>
+                                        <option value="P" {{ (old('jenis_kelamin', $student->jenis_kelamin ?? '') == 'P') ? 'selected' : '' }}>Perempuan</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div style="display: flex; gap: 24px; flex-wrap: nowrap; width: 100%; box-sizing: border-box;">
+                                <div style="flex: 1; min-width: 0;">
+                                    <label style="display: block; font-size: 16px; font-weight: 700; margin-bottom: 8px;">NIK(Otomatis)</label>
+                                    <input type="text" name="nik" style="width: 100%; background-color: #ffffff; border: none; border-radius: 12px; padding: 14px 18px; font-size: 16px; box-sizing: border-box;" value="{{ old('nik', $student->nik ?? '') }}">
+                                </div>
+                                <div style="flex: 1; min-width: 0;">
+                                    <label style="display: block; font-size: 16px; font-weight: 700; margin-bottom: 8px;">NISN(Otomatis)</label>
+                                    <input type="text" name="nisn" style="width: 100%; background-color: #ffffff; border: none; border-radius: 12px; padding: 14px 18px; font-size: 16px; box-sizing: border-box;" value="{{ old('nisn', $student->nisn ?? '') }}">
+                                </div>
+                            </div>
+
+                            <div style="display: flex; gap: 24px; flex-wrap: nowrap; width: 100%; box-sizing: border-box;">
+                                <div style="flex: 1; min-width: 0;">
+                                    <label style="display: block; font-size: 16px; font-weight: 700; margin-bottom: 8px;">Nomor Whatsapp(Otomatis)</label>
+                                    <div style="position: relative; display: flex; align-items: center; width: 100%;">
+                                        <span style="position: absolute; left: 16px; font-size: 16px; font-weight: 800;">+62</span>
+                                        <input type="text" name="no_wa" style="width: 100%; background-color: #ffffff; border: none; border-radius: 12px; padding: 14px 18px 14px 55px; font-size: 16px; box-sizing: border-box; font-weight: 700;" value="{{ old('no_wa', str_replace('+62', '', $student->no_wa ?? '')) }}">
+                                    </div>
+                                </div>
+                                <div style="flex: 1; min-width: 0;">
+                                    <label style="display: block; font-size: 16px; font-weight: 700; margin-bottom: 8px;">Asal Sekolah</label>
+                                    <input type="text" name="asal_sekolah" style="width: 100%; background-color: #ffffff; border: none; border-radius: 12px; padding: 14px 18px; font-size: 16px; box-sizing: border-box;" value="{{ old('asal_sekolah', $student->asal_sekolah ?? '') }}">
+                                </div>
+                            </div>
+
+                            <div>
+                                <label style="display: block; font-size: 16px; font-weight: 700; margin-bottom: 8px;">Alamat Rumah</label>
+                                <textarea name="alamat" rows="2" style="width: 100%; background-color: #ffffff; border: none; border-radius: 12px; padding: 14px 18px; font-size: 16px; box-sizing: border-box; resize: none;">{{ old('alamat', $student->alamat ?? '') }}</textarea>
+                            </div>
+                        </div>
                     </div>
 
-                    <div class="mt-4">
-                        <x-input-label for="asal_sekolah" :value="__('Asal Sekolah')" />
-                        <x-text-input id="asal_sekolah" name="asal_sekolah" type="text" class="mt-1 block w-full" :value="old('asal_sekolah', $detail->asal_sekolah ?? '')" required />
-                        <x-input-error class="mt-2" :messages="$errors->get('asal_sekolah')" />
+                    <div style="margin-bottom: 40px;">
+                        <h3 style="font-size: 24px; font-weight: 900; font-style: italic; margin-bottom: 24px;">B. Data Orang Tua</h3>
+                        
+                        <div style="display: flex; flex-direction: column; gap: 20px; width: 100%;">
+                            <div>
+                                <label style="display: block; font-size: 16px; font-weight: 700; margin-bottom: 8px;">Nama Lengkap Ayah</label>
+                                <input type="text" name="nama_ayah" style="width: 100%; background-color: #ffffff; border: none; border-radius: 12px; padding: 14px 18px; font-size: 16px; box-sizing: border-box;" value="{{ old('nama_ayah', $student->nama_ayah ?? '') }}">
+                            </div>
+
+                            <div>
+                                <label style="display: block; font-size: 16px; font-weight: 700; margin-bottom: 8px;">Nama Lengkap Ibu</label>
+                                <input type="text" name="nama_ibu" style="width: 100%; background-color: #ffffff; border: none; border-radius: 12px; padding: 14px 18px; font-size: 16px; box-sizing: border-box;" value="{{ old('nama_ibu', $student->nama_ibu ?? '') }}">
+                            </div>
+
+                            <div style="display: flex; gap: 24px; flex-wrap: nowrap; width: 100%; box-sizing: border-box;">
+                                <div style="flex: 1; min-width: 0;">
+                                    <label style="display: block; font-size: 16px; font-weight: 700; margin-bottom: 8px;">Tanggal Lahir Ayah</label>
+                                    <div style="display: flex; gap: 10px; width: 100%;">
+                                        <input type="text" name="ayah_birth_day" placeholder="D" maxlength="2" style="flex: 1; min-width: 0; text-align: center; padding: 14px 0; border: none; border-radius: 12px; font-weight: 700; font-size: 16px; background-color: white;" value="{{ old('ayah_birth_day', $ayah_date['d']) }}">
+                                        <input type="text" name="ayah_birth_month" placeholder="M" maxlength="2" style="flex: 1; min-width: 0; text-align: center; padding: 14px 0; border: none; border-radius: 12px; font-weight: 700; font-size: 16px; background-color: white;" value="{{ old('ayah_birth_month', $ayah_date['m']) }}">
+                                        <input type="text" name="ayah_birth_year" placeholder="Y" maxlength="4" style="flex: 1; min-width: 0; text-align: center; padding: 14px 0; border: none; border-radius: 12px; font-weight: 700; font-size: 16px; background-color: white;" value="{{ old('ayah_birth_year', $ayah_date['y']) }}">
+                                    </div>
+                                </div>
+                                <div style="flex: 1; min-width: 0;">
+                                    <label style="display: block; font-size: 16px; font-weight: 700; margin-bottom: 8px;">Tanggal Lahir Ibu</label>
+                                    <div style="display: flex; gap: 10px; width: 100%;">
+                                        <input type="text" name="ibu_birth_day" placeholder="D" maxlength="2" style="flex: 1; min-width: 0; text-align: center; padding: 14px 0; border: none; border-radius: 12px; font-weight: 700; font-size: 16px; background-color: white;" value="{{ old('ibu_birth_day', $ibu_date['d']) }}">
+                                        <input type="text" name="ibu_birth_month" placeholder="M" maxlength="2" style="flex: 1; min-width: 0; text-align: center; padding: 14px 0; border: none; border-radius: 12px; font-weight: 700; font-size: 16px; background-color: white;" value="{{ old('ibu_birth_month', $ibu_date['m']) }}">
+                                        <input type="text" name="ibu_birth_year" placeholder="Y" maxlength="4" style="flex: 1; min-width: 0; text-align: center; padding: 14px 0; border: none; border-radius: 12px; font-weight: 700; font-size: 16px; background-color: white;" value="{{ old('ibu_birth_year', $ibu_date['y']) }}">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div>
+                                <label style="display: block; font-size: 16px; font-weight: 700; margin-bottom: 8px;">Alamat Orang Tua</label>
+                                <textarea name="alamat_ortu" rows="2" style="width: 100%; background-color: #ffffff; border: none; border-radius: 12px; padding: 14px 18px; font-size: 16px; box-sizing: border-box; resize: none;">{{ old('alamat_ortu', $student->alamat_ortu ?? '') }}</textarea>
+                            </div>
+
+                            <div style="display: flex; gap: 24px; flex-wrap: nowrap; width: 100%; box-sizing: border-box;">
+                                <div style="flex: 1; min-width: 0;">
+                                    <label style="display: block; font-size: 16px; font-weight: 700; margin-bottom: 8px;">Nomor Whatsapp(Otomatis)</label>
+                                    <div style="position: relative; display: flex; align-items: center; width: 100%;">
+                                        <span style="position: absolute; left: 16px; font-size: 16px; font-weight: 800;">+62</span>
+                                        <input type="text" name="no_wa_ortu" style="width: 100%; background-color: #ffffff; border: none; border-radius: 12px; padding: 14px 18px 14px 55px; font-size: 16px; box-sizing: border-box; font-weight: 700;" value="{{ old('no_wa_ortu', str_replace('+62', '', $student->no_wa_ortu ?? '')) }}">
+                                    </div>
+                                </div>
+                                <div style="flex: 1; min-width: 0;">
+                                    <label style="display: block; font-size: 16px; font-weight: 700; margin-bottom: 8px;">Pekerjaan Ayah</label>
+                                    <input type="text" name="pekerjaan_ayah" style="width: 100%; background-color: #ffffff; border: none; border-radius: 12px; padding: 14px 18px; font-size: 16px; box-sizing: border-box;" value="{{ old('pekerjaan_ayah', $student->pekerjaan_ayah ?? '') }}">
+                                </div>
+                            </div>
+
+                            <div style="display: flex; gap: 24px; flex-wrap: nowrap; width: 100%; box-sizing: border-box;">
+                                <div style="flex: 1; min-width: 0; visibility: hidden;"></div>
+                                <div style="flex: 1; min-width: 0;">
+                                    <label style="display: block; font-size: 16px; font-weight: 700; margin-bottom: 8px;">Pekerjaan Ibu</label>
+                                    <input type="text" name="pekerjaan_ibu" style="width: 100%; background-color: #ffffff; border: none; border-radius: 12px; padding: 14px 18px; font-size: 16px; box-sizing: border-box;" value="{{ old('pekerjaan_ibu', $student->pekerjaan_ibu ?? '') }}">
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
-                    <div class="mt-4">
-                        <x-input-label for="alamat" :value="__('Alamat Lengkap')" />
-                        <textarea id="alamat" name="alamat" class="mt-1 block w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm" rows="3" required>{{ old('alamat', $detail->alamat ?? '') }}</textarea>
-                        <x-input-error class="mt-2" :messages="$errors->get('alamat')" />
+                    <div style="margin-bottom: 20px;">
+                        <h3 style="font-size: 24px; font-weight: 900; font-style: italic; margin-bottom: 24px;">C. Data Wali(Opsional)</h3>
+                        
+                        <div style="display: flex; flex-direction: column; gap: 20px; width: 100%;">
+                            <div>
+                                <label style="display: block; font-size: 16px; font-weight: 700; margin-bottom: 8px;">Nama Lengkap Wali</label>
+                                <input type="text" name="nama_wali" style="width: 100%; background-color: #ffffff; border: none; border-radius: 12px; padding: 14px 18px; font-size: 16px; box-sizing: border-box;" value="{{ old('nama_wali', $student->nama_wali ?? '') }}">
+                            </div>
+
+                            <div style="display: flex; gap: 24px; flex-wrap: nowrap; width: 100%; box-sizing: border-box;">
+                                <div style="flex: 1; min-width: 0;">
+                                    <label style="display: block; font-size: 16px; font-weight: 700; margin-bottom: 8px;">Nomor Whatsapp</label>
+                                    <div style="position: relative; display: flex; align-items: center; width: 100%;">
+                                        <span style="position: absolute; left: 16px; font-size: 16px; font-weight: 800;">+62</span>
+                                        <input type="text" name="no_wa_wali" style="width: 100%; background-color: #ffffff; border: none; border-radius: 12px; padding: 14px 18px 14px 55px; font-size: 16px; box-sizing: border-box; font-weight: 700;" value="{{ old('no_wa_wali', str_replace('+62', '', $student->no_wa_wali ?? '')) }}">
+                                    </div>
+                                </div>
+                                <div style="flex: 1; min-width: 0;">
+                                    <label style="display: block; font-size: 16px; font-weight: 700; margin-bottom: 8px;">Pekerjaan</label>
+                                    <input type="text" name="pekerjaan_wali" style="width: 100%; background-color: #ffffff; border: none; border-radius: 12px; padding: 14px 18px; font-size: 16px; box-sizing: border-box;" value="{{ old('pekerjaan_wali', $student->pekerjaan_wali ?? '') }}">
+                                </div>
+                            </div>
+
+                            <div>
+                                <label style="display: block; font-size: 16px; font-weight: 700; margin-bottom: 8px;">Alamat</label>
+                                <textarea name="alamat_wali" rows="2" style="width: 100%; background-color: #ffffff; border: none; border-radius: 12px; padding: 14px 18px; font-size: 16px; box-sizing: border-box; resize: none;">{{ old('alamat_wali', $student->alamat_wali ?? '') }}</textarea>
+                            </div>
+                        </div>
                     </div>
 
-                    <div class="flex items-center mt-6">
-                        <x-primary-button>
-                            {{ __('Simpan Biodata') }}
-                        </x-primary-button>
+                    <div style="display: flex; justify-content: flex-end; margin-top: 40px;">
+                        <button type="submit" style="background-color: #1F2937; color: #ffffff; font-size: 18px; font-weight: 900; padding: 16px 48px; border: none; border-radius: 12px; cursor: pointer; text-transform: uppercase; letter-spacing: 1px;">
+                            Simpan Biodata
+                        </button>
                     </div>
+
                 </form>
-
             </div>
+
         </div>
     </div>
 </x-app-layout>
