@@ -1,5 +1,5 @@
 <x-app-layout>
-    <div style="padding: 40px 0; background-color: #ffffff; min-height: 100vh; font-family: sans-serif;">
+    <div style="width: 100%; padding: 40px 0; background-color: #ffffff; min-height: 100vh; font-family: sans-serif;">
         <div style="width: 100%; max-width: 1200px; margin: 0 auto; padding: 0 24px; box-sizing: border-box;">
             
             @if (session('success'))
@@ -133,18 +133,56 @@
                             <div style="display: flex; gap: 24px; flex-wrap: nowrap; width: 100%; box-sizing: border-box;">
                                 <div style="flex: 1; min-width: 0;">
                                     <label style="display: block; font-size: 16px; font-weight: 700; margin-bottom: 8px;">Tanggal Lahir Ayah</label>
-                                    <div style="display: flex; gap: 10px; width: 100%;">
-                                        <input type="text" name="ayah_birth_day" placeholder="D" maxlength="2" style="flex: 1; min-width: 0; text-align: center; padding: 14px 0; border: none; border-radius: 12px; font-weight: 700; font-size: 16px; background-color: white;" value="{{ old('ayah_birth_day', $ayah_date['d']) }}">
-                                        <input type="text" name="ayah_birth_month" placeholder="M" maxlength="2" style="flex: 1; min-width: 0; text-align: center; padding: 14px 0; border: none; border-radius: 12px; font-weight: 700; font-size: 16px; background-color: white;" value="{{ old('ayah_birth_month', $ayah_date['m']) }}">
-                                        <input type="text" name="ayah_birth_year" placeholder="Y" maxlength="4" style="flex: 1; min-width: 0; text-align: center; padding: 14px 0; border: none; border-radius: 12px; font-weight: 700; font-size: 16px; background-color: white;" value="{{ old('ayah_birth_year', $ayah_date['y']) }}">
+                                    <div style="display: flex; gap: 12px; width: 100%;">
+                                        <select name="ayah_birth_day" style="flex: 0.5; min-width: 0; text-align: center; padding: 14px 0 14px 12px; border: none; border-radius: 12px; font-weight: 700; font-size: 16px; background-color: white; cursor: pointer; -webkit-appearance: select; appearance: select;" required>
+                                            <option value="" disabled selected hidden>D</option>
+                                            @for ($d = 1; $d <= 31; $d++)
+                                                @php $val = sprintf('%02d', $d); @endphp
+                                                <option value="{{ $val }}" {{ old('ayah_birth_day', $ayah_date['d']) == $val ? 'selected' : '' }}>{{ $val }}</option>
+                                            @endfor
+                                        </select>
+
+                                        <select name="ayah_birth_month" style="flex: 0.5; min-width: 0; text-align: center; padding: 14px 0 14px 10px; border: none; border-radius: 12px; font-weight: 700; font-size: 16px; background-color: white; cursor: pointer; -webkit-appearance: select; appearance: select;" required>
+                                            <option value="" disabled selected hidden>M</option>
+                                            @for ($m = 1; $m <= 12; $m++)
+                                                @php $val = sprintf('%02d', $m); @endphp
+                                                <option value="{{ $val }}" {{ old('ayah_birth_month', $ayah_date['m']) == $val ? 'selected' : '' }}>{{ $val }}</option>
+                                            @endfor
+                                        </select>
+
+                                        <select name="ayah_birth_year" style="flex: 0.8; min-width: 0; text-align: center; padding: 14px 0 14px 8px; border: none; border-radius: 12px; font-weight: 700; font-size: 16px; background-color: white; cursor: pointer; -webkit-appearance: select; appearance: select;" required>
+                                            <option value="" disabled selected hidden>Y</option>
+                                            @for ($y = date('Y'); $y >= date('Y') - 80; $y--)
+                                                <option value="{{ $y }}" {{ old('ayah_birth_year', $ayah_date['y']) == $y ? 'selected' : '' }}>{{ $y }}</option>
+                                            @endfor
+                                        </select>
                                     </div>
                                 </div>
                                 <div style="flex: 1; min-width: 0;">
                                     <label style="display: block; font-size: 16px; font-weight: 700; margin-bottom: 8px;">Tanggal Lahir Ibu</label>
-                                    <div style="display: flex; gap: 10px; width: 100%;">
-                                        <input type="text" name="ibu_birth_day" placeholder="D" maxlength="2" style="flex: 1; min-width: 0; text-align: center; padding: 14px 0; border: none; border-radius: 12px; font-weight: 700; font-size: 16px; background-color: white;" value="{{ old('ibu_birth_day', $ibu_date['d']) }}">
-                                        <input type="text" name="ibu_birth_month" placeholder="M" maxlength="2" style="flex: 1; min-width: 0; text-align: center; padding: 14px 0; border: none; border-radius: 12px; font-weight: 700; font-size: 16px; background-color: white;" value="{{ old('ibu_birth_month', $ibu_date['m']) }}">
-                                        <input type="text" name="ibu_birth_year" placeholder="Y" maxlength="4" style="flex: 1; min-width: 0; text-align: center; padding: 14px 0; border: none; border-radius: 12px; font-weight: 700; font-size: 16px; background-color: white;" value="{{ old('ibu_birth_year', $ibu_date['y']) }}">
+                                    <div style="display: flex; gap: 12px; width: 100%;">
+                                        <select name="ibu_birth_day" style="flex: 0.5; min-width: 0; text-align: center; padding: 14px 0 14px 12px; border: none; border-radius: 12px; font-weight: 700; font-size: 16px; background-color: white; cursor: pointer; -webkit-appearance: select; appearance: select;" required>
+                                            <option value="" disabled selected hidden>D</option>
+                                            @for ($d = 1; $d <= 31; $d++)
+                                                @php $val = sprintf('%02d', $d); @endphp
+                                                <option value="{{ $val }}" {{ old('ibu_birth_day', $ibu_date['d']) == $val ? 'selected' : '' }}>{{ $val }}</option>
+                                            @endfor
+                                        </select>
+
+                                        <select name="ibu_birth_month" style="flex: 0.5; min-width: 0; text-align: center; padding: 14px 0 14px 10px; border: none; border-radius: 12px; font-weight: 700; font-size: 16px; background-color: white; cursor: pointer; -webkit-appearance: select; appearance: select;" required>
+                                            <option value="" disabled selected hidden>M</option>
+                                            @for ($m = 1; $m <= 12; $m++)
+                                                @php $val = sprintf('%02d', $m); @endphp
+                                                <option value="{{ $val }}" {{ old('ibu_birth_month', $ibu_date['m']) == $val ? 'selected' : '' }}>{{ $val }}</option>
+                                            @endfor
+                                        </select>
+
+                                        <select name="ibu_birth_year" style="flex: 0.8; min-width: 0; text-align: center; padding: 14px 0 14px 8px; border: none; border-radius: 12px; font-weight: 700; font-size: 16px; background-color: white; cursor: pointer; -webkit-appearance: select; appearance: select;" required>
+                                            <option value="" disabled selected hidden>Y</option>
+                                            @for ($y = date('Y'); $y >= date('Y') - 80; $y--)
+                                                <option value="{{ $y }}" {{ old('ibu_birth_year', $ibu_date['y']) == $y ? 'selected' : '' }}>{{ $y }}</option>
+                                            @endfor
+                                        </select>
                                     </div>
                                 </div>
                             </div>
