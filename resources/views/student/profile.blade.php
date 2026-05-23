@@ -3,8 +3,19 @@
         <div style="width: 100%; max-width: 1200px; margin: 0 auto; padding: 0 24px; box-sizing: border-box;">
             
             @if (session('success'))
-                <div style="margin-bottom: 24px; padding: 16px; bg-color: #d1e7dd; color: #0f5132; border-radius: 12px; font-weight: bold;">
+                <div style="margin-bottom: 24px; padding: 16px; background-color: #d1e7dd; color: #0f5132; border-radius: 12px; font-weight: bold; border: 1px solid #badbcc;">
                     {{ session('success') }}
+                </div>
+            @endif
+
+            @if ($errors->any())
+                <div style="margin-bottom: 24px; padding: 16px; background-color: #f8d7da; color: #842029; border-radius: 12px; font-weight: bold; border: 1px solid #f5c2c7;">
+                    <p style="margin: 0 0 8px 0; font-size: 16px;">Mohon periksa kembali isian Anda:</p>
+                    <ul style="margin: 0; padding-left: 20px; font-size: 14px; font-weight: normal;">
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
                 </div>
             @endif
 
@@ -14,6 +25,7 @@
                 function splitDateToFields($dateString) {
                     if (empty($dateString)) return ['d' => '', 'm' => '', 'y' => ''];
                     $time = strtotime($dateString);
+                    if (!$time) return ['d' => '', 'm' => '', 'y' => ''];
                     return [
                         'd' => date('d', $time),
                         'm' => date('m', $time),
@@ -21,9 +33,25 @@
                     ];
                 }
 
-                $siswa_date = splitDateToFields(old('tanggal_lahir', $student->tanggal_lahir ?? ''));
-                $ayah_date = splitDateToFields(old('tanggal_lahir_ayah', $student->tanggal_lahir_ayah ?? ''));
-                $ibu_date = splitDateToFields(old('tanggal_lahir_ibu', $student->tanggal_lahir_ibu ?? ''));
+                $student_birth = splitDateToFields($student->tanggal_lahir ?? '');
+                $ayah_birth = splitDateToFields($student->tanggal_lahir_ayah ?? '');
+                $ibu_birth = splitDateToFields($student->tanggal_lahir_ibu ?? '');
+
+                $siswa_date = [
+                    'd' => old('birth_day', $student_birth['d']),
+                    'm' => old('birth_month', $student_birth['m']),
+                    'y' => old('birth_year', $student_birth['y']),
+                ];
+                $ayah_date = [
+                    'd' => old('ayah_birth_day', $ayah_birth['d']),
+                    'm' => old('ayah_birth_month', $ayah_birth['m']),
+                    'y' => old('ayah_birth_year', $ayah_birth['y']),
+                ];
+                $ibu_date = [
+                    'd' => old('ibu_birth_day', $ibu_birth['d']),
+                    'm' => old('ibu_birth_month', $ibu_birth['m']),
+                    'y' => old('ibu_birth_year', $ibu_birth['y']),
+                ];
             @endphp
 
             <div style="background-color: #D9D9D9; border-radius: 30px; padding: 40px; color: #000000; box-sizing: border-box; width: 100%;">

@@ -7,6 +7,12 @@
 
         <div class="w-full sm:max-w-md mt-6 px-6 py-4 bg-white shadow-md overflow-hidden sm:rounded-lg">
             
+            @if (session('status'))
+                <div class="mb-4 font-medium text-sm text-green-600">
+                    {{ session('status') }}
+                </div>
+            @endif
+
             <form method="POST" action="{{ route('jenjang.update') }}">
                 @csrf
                 @method('PATCH')
@@ -21,9 +27,9 @@
                     </label>
                     
                     <select id="jenjang" name="jenjang" class="mt-1 block w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm">
-                        <option value="SD">PMC Kids (TK)</option>
-                        <option value="SMP">PMC Home School (SD)</option>
-                        <option value="SMA">Al-Bayan Huffadz School (SMP/SMA)</option>
+                        <option value="SD" {{ auth()->user()->jenjang == 'SD' ? 'selected' : '' }}>PMC Kids (TK)</option>
+                        <option value="SMP" {{ auth()->user()->jenjang == 'SMP' ? 'selected' : '' }}>PMC Home School (SD)</option>
+                        <option value="SMA" {{ auth()->user()->jenjang == 'SMA' ? 'selected' : '' }}>Al-Bayan Huffadz School (SMP/SMA)</option>
                     </select>
                 </div>
 

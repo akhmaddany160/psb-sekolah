@@ -33,6 +33,10 @@ class User extends Authenticatable
     {
         return $this->hasOne(StudentDetail::class);
     }
+    public function studentDocument()
+    {
+        return $this->hasOne(StudentDocument::class);
+    }
     public static function normalizePhone($phone)
     {
         $clean = preg_replace('/[^0-9]/', '', $phone);

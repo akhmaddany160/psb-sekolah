@@ -14,8 +14,12 @@
             {{ __('Biodata') }}
         </x-responsive-nav-link>
 
+        <x-responsive-nav-link :href="route('student.pemberkasan.edit')" :active="request()->routeIs('student.pemberkasan.edit')" class="block w-full py-3 text-center border rounded-md">
+            {{ __('Pemberkasan') }}
+        </x-responsive-nav-link>
+
         @php
-            $menus = ['Pemberkasan', 'Pembayaran Formulir', 'Test Seleksi', 'Hasil Test Seleksi', 'Pembayaran Daftar Ulang', 'Kartu Pelajar'];
+            $menus = ['Pembayaran Formulir', 'Test Seleksi', 'Hasil Test Seleksi', 'Pembayaran Daftar Ulang', 'Kartu Pelajar'];
         @endphp
 
         @foreach($menus as $menu)

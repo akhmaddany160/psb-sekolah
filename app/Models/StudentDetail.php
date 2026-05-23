@@ -16,6 +16,19 @@ class StudentDetail extends Model
         'jenis_kelamin',
         'alamat',
         'asal_sekolah',
+        'no_wa',
+        'nama_ayah',
+        'nama_ibu',
+        'tanggal_lahir_ayah',
+        'tanggal_lahir_ibu',
+        'alamat_ortu',
+        'no_wa_ortu',
+        'pekerjaan_ayah',
+        'pekerjaan_ibu',
+        'nama_wali',
+        'no_wa_wali',
+        'pekerjaan_wali',
+        'alamat_wali',
     ];
 
     public function user()
