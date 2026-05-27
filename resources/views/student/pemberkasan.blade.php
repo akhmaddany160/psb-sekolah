@@ -315,12 +315,7 @@
                                 @if ($isImage)
                                     <img src="{{ asset('storage/documents/' . auth()->id() . '/' . $fileName) }}" style="width: 100% !important; height: 100% !important; object-fit: cover !important; display: block !important;" alt="Ijazah" />
                                 @else
-                                    <div class="pdf-mock-preview" style="width: 100% !important; height: 100% !important; background: #f8fafc !important; display: flex !important; flex-direction: column !important; align-items: center !important; justify-content: center !important; position: relative !important; padding-bottom: 56px !important;">
-                                        <svg style="width: 48px !important; height: 48px !important; color: #ef4444 !important;" fill="currentColor" viewBox="0 0 20 20">
-                                            <path fill-rule="evenodd" d="M4 4a2 2 0 012-2h4.586A1 1 0 0112 2.586L15.414 6A1 1 0 0116 6.707V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 6a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 100 2h6a1 1 0 100-2H7z" clip-rule="evenodd"></path>
-                                        </svg>
-                                        <span style="font-size: 10px !important; font-weight: 800 !important; color: #ef4444 !important; background: #fee2e2 !important; padding: 2px 8px !important; border-radius: 4px !important; text-transform: uppercase !important; letter-spacing: 0.05em !important; margin-top: 6px !important;">PDF Document</span>
-                                    </div>
+                                    <iframe src="{{ asset('storage/documents/' . auth()->id() . '/' . $fileName) }}#toolbar=0&navpanes=0&scrollbar=0" style="width: 100% !important; height: 100% !important; border: none !important; pointer-events: none !important; display: block !important;" frameborder="0"></iframe>
                                 @endif
                                 <div style="position: absolute !important; bottom: 0 !important; left: 0 !important; right: 0 !important; padding: 10px 14px !important; background: rgba(15, 23, 42, 0.88) !important; backdrop-filter: blur(12px) !important; -webkit-backdrop-filter: blur(12px) !important; border-top: 1px solid rgba(255, 255, 255, 0.15) !important; display: flex !important; align-items: center !important; justify-content: space-between !important; z-index: 10 !important; border-bottom-left-radius: 10px !important; border-bottom-right-radius: 10px !important;">
                                     <div style="display: flex !important; align-items: center !important; gap: 6px !important; min-width: 0 !important;">
@@ -371,12 +366,7 @@
                                 @if ($isImage)
                                     <img src="{{ asset('storage/documents/' . auth()->id() . '/' . $fileName) }}" style="width: 100% !important; height: 100% !important; object-fit: cover !important; display: block !important;" alt="Transkrip Nilai" />
                                 @else
-                                    <div class="pdf-mock-preview" style="width: 100% !important; height: 100% !important; background: #f8fafc !important; display: flex !important; flex-direction: column !important; align-items: center !important; justify-content: center !important; position: relative !important; padding-bottom: 56px !important;">
-                                        <svg style="width: 48px !important; height: 48px !important; color: #ef4444 !important;" fill="currentColor" viewBox="0 0 20 20">
-                                            <path fill-rule="evenodd" d="M4 4a2 2 0 012-2h4.586A1 1 0 0112 2.586L15.414 6A1 1 0 0116 6.707V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 6a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 100 2h6a1 1 0 100-2H7z" clip-rule="evenodd"></path>
-                                        </svg>
-                                        <span style="font-size: 10px !important; font-weight: 800 !important; color: #ef4444 !important; background: #fee2e2 !important; padding: 2px 8px !important; border-radius: 4px !important; text-transform: uppercase !important; letter-spacing: 0.05em !important; margin-top: 6px !important;">PDF Document</span>
-                                    </div>
+                                    <iframe src="{{ asset('storage/documents/' . auth()->id() . '/' . $fileName) }}#toolbar=0&navpanes=0&scrollbar=0" style="width: 100% !important; height: 100% !important; border: none !important; pointer-events: none !important; display: block !important;" frameborder="0"></iframe>
                                 @endif
                                 <div style="position: absolute !important; bottom: 0 !important; left: 0 !important; right: 0 !important; padding: 10px 14px !important; background: rgba(15, 23, 42, 0.88) !important; backdrop-filter: blur(12px) !important; -webkit-backdrop-filter: blur(12px) !important; border-top: 1px solid rgba(255, 255, 255, 0.15) !important; display: flex !important; align-items: center !important; justify-content: space-between !important; z-index: 10 !important; border-bottom-left-radius: 10px !important; border-bottom-right-radius: 10px !important;">
                                     <div style="display: flex !important; align-items: center !important; gap: 6px !important; min-width: 0 !important;">
@@ -432,12 +422,7 @@
                                 @if ($isImage)
                                     <img src="{{ asset('storage/documents/' . auth()->id() . '/' . $fileName) }}" style="width: 100% !important; height: 100% !important; object-fit: cover !important; display: block !important;" alt="Akta Kelahiran" />
                                 @else
-                                    <div class="pdf-mock-preview" style="width: 100% !important; height: 100% !important; background: #f8fafc !important; display: flex !important; flex-direction: column !important; align-items: center !important; justify-content: center !important; position: relative !important; padding-bottom: 56px !important;">
-                                        <svg style="width: 48px !important; height: 48px !important; color: #ef4444 !important;" fill="currentColor" viewBox="0 0 20 20">
-                                            <path fill-rule="evenodd" d="M4 4a2 2 0 012-2h4.586A1 1 0 0112 2.586L15.414 6A1 1 0 0116 6.707V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 6a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 100 2h6a1 1 0 100-2H7z" clip-rule="evenodd"></path>
-                                        </svg>
-                                        <span style="font-size: 10px !important; font-weight: 800 !important; color: #ef4444 !important; background: #fee2e2 !important; padding: 2px 8px !important; border-radius: 4px !important; text-transform: uppercase !important; letter-spacing: 0.05em !important; margin-top: 6px !important;">PDF Document</span>
-                                    </div>
+                                    <iframe src="{{ asset('storage/documents/' . auth()->id() . '/' . $fileName) }}#toolbar=0&navpanes=0&scrollbar=0" style="width: 100% !important; height: 100% !important; border: none !important; pointer-events: none !important; display: block !important;" frameborder="0"></iframe>
                                 @endif
                                 <div style="position: absolute !important; bottom: 0 !important; left: 0 !important; right: 0 !important; padding: 10px 14px !important; background: rgba(15, 23, 42, 0.88) !important; backdrop-filter: blur(12px) !important; -webkit-backdrop-filter: blur(12px) !important; border-top: 1px solid rgba(255, 255, 255, 0.15) !important; display: flex !important; align-items: center !important; justify-content: space-between !important; z-index: 10 !important; border-bottom-left-radius: 10px !important; border-bottom-right-radius: 10px !important;">
                                     <div style="display: flex !important; align-items: center !important; gap: 6px !important; min-width: 0 !important;">
@@ -493,12 +478,7 @@
                                 @if ($isImage)
                                     <img src="{{ asset('storage/documents/' . auth()->id() . '/' . $fileName) }}" style="width: 100% !important; height: 100% !important; object-fit: cover !important; display: block !important;" alt="Pas Photo 3x4" />
                                 @else
-                                    <div class="pdf-mock-preview" style="width: 100% !important; height: 100% !important; background: #f8fafc !important; display: flex !important; flex-direction: column !important; align-items: center !important; justify-content: center !important; position: relative !important; padding-bottom: 56px !important;">
-                                        <svg style="width: 48px !important; height: 48px !important; color: #ef4444 !important;" fill="currentColor" viewBox="0 0 20 20">
-                                            <path fill-rule="evenodd" d="M4 4a2 2 0 012-2h4.586A1 1 0 0112 2.586L15.414 6A1 1 0 0116 6.707V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 6a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 100 2h6a1 1 0 100-2H7z" clip-rule="evenodd"></path>
-                                        </svg>
-                                        <span style="font-size: 10px !important; font-weight: 800 !important; color: #ef4444 !important; background: #fee2e2 !important; padding: 2px 8px !important; border-radius: 4px !important; text-transform: uppercase !important; letter-spacing: 0.05em !important; margin-top: 6px !important;">PDF Document</span>
-                                    </div>
+                                    <iframe src="{{ asset('storage/documents/' . auth()->id() . '/' . $fileName) }}#toolbar=0&navpanes=0&scrollbar=0" style="width: 100% !important; height: 100% !important; border: none !important; pointer-events: none !important; display: block !important;" frameborder="0"></iframe>
                                 @endif
                                 <div style="position: absolute !important; bottom: 0 !important; left: 0 !important; right: 0 !important; padding: 10px 14px !important; background: rgba(15, 23, 42, 0.88) !important; backdrop-filter: blur(12px) !important; -webkit-backdrop-filter: blur(12px) !important; border-top: 1px solid rgba(255, 255, 255, 0.15) !important; display: flex !important; align-items: center !important; justify-content: space-between !important; z-index: 10 !important; border-bottom-left-radius: 10px !important; border-bottom-right-radius: 10px !important;">
                                     <div style="display: flex !important; align-items: center !important; gap: 6px !important; min-width: 0 !important;">
@@ -554,12 +534,7 @@
                                 @if ($isImage)
                                     <img src="{{ asset('storage/documents/' . auth()->id() . '/' . $fileName) }}" style="width: 100% !important; height: 100% !important; object-fit: cover !important; display: block !important;" alt="Sertifikat Prestasi" />
                                 @else
-                                    <div class="pdf-mock-preview" style="width: 100% !important; height: 100% !important; background: #f8fafc !important; display: flex !important; flex-direction: column !important; align-items: center !important; justify-content: center !important; position: relative !important; padding-bottom: 56px !important;">
-                                        <svg style="width: 48px !important; height: 48px !important; color: #ef4444 !important;" fill="currentColor" viewBox="0 0 20 20">
-                                            <path fill-rule="evenodd" d="M4 4a2 2 0 012-2h4.586A1 1 0 0112 2.586L15.414 6A1 1 0 0116 6.707V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 6a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 100 2h6a1 1 0 100-2H7z" clip-rule="evenodd"></path>
-                                        </svg>
-                                        <span style="font-size: 10px !important; font-weight: 800 !important; color: #ef4444 !important; background: #fee2e2 !important; padding: 2px 8px !important; border-radius: 4px !important; text-transform: uppercase !important; letter-spacing: 0.05em !important; margin-top: 6px !important;">PDF Document</span>
-                                    </div>
+                                    <iframe src="{{ asset('storage/documents/' . auth()->id() . '/' . $fileName) }}#toolbar=0&navpanes=0&scrollbar=0" style="width: 100% !important; height: 100% !important; border: none !important; pointer-events: none !important; display: block !important;" frameborder="0"></iframe>
                                 @endif
                                 <div style="position: absolute !important; bottom: 0 !important; left: 0 !important; right: 0 !important; padding: 10px 14px !important; background: rgba(15, 23, 42, 0.88) !important; backdrop-filter: blur(12px) !important; -webkit-backdrop-filter: blur(12px) !important; border-top: 1px solid rgba(255, 255, 255, 0.15) !important; display: flex !important; align-items: center !important; justify-content: space-between !important; z-index: 10 !important; border-bottom-left-radius: 10px !important; border-bottom-right-radius: 10px !important;">
                                     <div style="display: flex !important; align-items: center !important; gap: 6px !important; min-width: 0 !important;">
@@ -615,12 +590,7 @@
                                 @if ($isImage)
                                     <img src="{{ asset('storage/documents/' . auth()->id() . '/' . $fileName) }}" style="width: 100% !important; height: 100% !important; object-fit: cover !important; display: block !important;" alt="Sertifikat Tahfidz" />
                                 @else
-                                    <div class="pdf-mock-preview" style="width: 100% !important; height: 100% !important; background: #f8fafc !important; display: flex !important; flex-direction: column !important; align-items: center !important; justify-content: center !important; position: relative !important; padding-bottom: 56px !important;">
-                                        <svg style="width: 48px !important; height: 48px !important; color: #ef4444 !important;" fill="currentColor" viewBox="0 0 20 20">
-                                            <path fill-rule="evenodd" d="M4 4a2 2 0 012-2h4.586A1 1 0 0112 2.586L15.414 6A1 1 0 0116 6.707V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 6a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 100 2h6a1 1 0 100-2H7z" clip-rule="evenodd"></path>
-                                        </svg>
-                                        <span style="font-size: 10px !important; font-weight: 800 !important; color: #ef4444 !important; background: #fee2e2 !important; padding: 2px 8px !important; border-radius: 4px !important; text-transform: uppercase !important; letter-spacing: 0.05em !important; margin-top: 6px !important;">PDF Document</span>
-                                    </div>
+                                    <iframe src="{{ asset('storage/documents/' . auth()->id() . '/' . $fileName) }}#toolbar=0&navpanes=0&scrollbar=0" style="width: 100% !important; height: 100% !important; border: none !important; pointer-events: none !important; display: block !important;" frameborder="0"></iframe>
                                 @endif
                                 <div style="position: absolute !important; bottom: 0 !important; left: 0 !important; right: 0 !important; padding: 10px 14px !important; background: rgba(15, 23, 42, 0.88) !important; backdrop-filter: blur(12px) !important; -webkit-backdrop-filter: blur(12px) !important; border-top: 1px solid rgba(255, 255, 255, 0.15) !important; display: flex !important; align-items: center !important; justify-content: space-between !important; z-index: 10 !important; border-bottom-left-radius: 10px !important; border-bottom-right-radius: 10px !important;">
                                     <div style="display: flex !important; align-items: center !important; gap: 6px !important; min-width: 0 !important;">
@@ -678,12 +648,7 @@
                                 @if ($isImage)
                                     <img src="{{ asset('storage/documents/' . auth()->id() . '/' . $fileName) }}" style="width: 100% !important; height: 100% !important; object-fit: cover !important; display: block !important;" alt="Kartu Keluarga" />
                                 @else
-                                    <div class="pdf-mock-preview" style="width: 100% !important; height: 100% !important; background: #f8fafc !important; display: flex !important; flex-direction: column !important; align-items: center !important; justify-content: center !important; position: relative !important; padding-bottom: 48px !important;">
-                                        <svg style="width: 36px !important; height: 36px !important; color: #ef4444 !important;" fill="currentColor" viewBox="0 0 20 20">
-                                            <path fill-rule="evenodd" d="M4 4a2 2 0 012-2h4.586A1 1 0 0112 2.586L15.414 6A1 1 0 0116 6.707V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 6a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 100 2h6a1 1 0 100-2H7z" clip-rule="evenodd"></path>
-                                        </svg>
-                                        <span style="font-size: 8px !important; font-weight: 800 !important; color: #ef4444 !important; background: #fee2e2 !important; padding: 1px 6px !important; border-radius: 4px !important; text-transform: uppercase !important; letter-spacing: 0.05em !important; margin-top: 4px !important;">PDF Document</span>
-                                    </div>
+                                    <iframe src="{{ asset('storage/documents/' . auth()->id() . '/' . $fileName) }}#toolbar=0&navpanes=0&scrollbar=0" style="width: 100% !important; height: 100% !important; border: none !important; pointer-events: none !important; display: block !important;" frameborder="0"></iframe>
                                 @endif
                                 <div style="position: absolute !important; bottom: 0 !important; left: 0 !important; right: 0 !important; padding: 6px 12px !important; background: rgba(15, 23, 42, 0.88) !important; backdrop-filter: blur(12px) !important; -webkit-backdrop-filter: blur(12px) !important; border-top: 1px solid rgba(255, 255, 255, 0.15) !important; display: flex !important; align-items: center !important; justify-content: space-between !important; z-index: 10 !important; border-bottom-left-radius: 10px !important; border-bottom-right-radius: 10px !important;">
                                     <div style="display: flex !important; align-items: center !important; gap: 6px !important; min-width: 0 !important;">
@@ -738,12 +703,7 @@
                                 @if ($isImage)
                                     <img src="{{ asset('storage/documents/' . auth()->id() . '/' . $fileName) }}" style="width: 100% !important; height: 100% !important; object-fit: cover !important; display: block !important;" alt="NISN" />
                                 @else
-                                    <div class="pdf-mock-preview" style="width: 100% !important; height: 100% !important; background: #f8fafc !important; display: flex !important; flex-direction: column !important; align-items: center !important; justify-content: center !important; position: relative !important; padding-bottom: 48px !important;">
-                                        <svg style="width: 36px !important; height: 36px !important; color: #ef4444 !important;" fill="currentColor" viewBox="0 0 20 20">
-                                            <path fill-rule="evenodd" d="M4 4a2 2 0 012-2h4.586A1 1 0 0112 2.586L15.414 6A1 1 0 0116 6.707V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 6a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 100 2h6a1 1 0 100-2H7z" clip-rule="evenodd"></path>
-                                        </svg>
-                                        <span style="font-size: 8px !important; font-weight: 800 !important; color: #ef4444 !important; background: #fee2e2 !important; padding: 1px 6px !important; border-radius: 4px !important; text-transform: uppercase !important; letter-spacing: 0.05em !important; margin-top: 4px !important;">PDF Document</span>
-                                    </div>
+                                    <iframe src="{{ asset('storage/documents/' . auth()->id() . '/' . $fileName) }}#toolbar=0&navpanes=0&scrollbar=0" style="width: 100% !important; height: 100% !important; border: none !important; pointer-events: none !important; display: block !important;" frameborder="0"></iframe>
                                 @endif
                                 <div style="position: absolute !important; bottom: 0 !important; left: 0 !important; right: 0 !important; padding: 6px 12px !important; background: rgba(15, 23, 42, 0.88) !important; backdrop-filter: blur(12px) !important; -webkit-backdrop-filter: blur(12px) !important; border-top: 1px solid rgba(255, 255, 255, 0.15) !important; display: flex !important; align-items: center !important; justify-content: space-between !important; z-index: 10 !important; border-bottom-left-radius: 10px !important; border-bottom-right-radius: 10px !important;">
                                     <div style="display: flex !important; align-items: center !important; gap: 6px !important; min-width: 0 !important;">
@@ -798,12 +758,7 @@
                                 @if ($isImage)
                                     <img src="{{ asset('storage/documents/' . auth()->id() . '/' . $fileName) }}" style="width: 100% !important; height: 100% !important; object-fit: cover !important; display: block !important;" alt="KTP Orang Tua/ Wali" />
                                 @else
-                                    <div class="pdf-mock-preview" style="width: 100% !important; height: 100% !important; background: #f8fafc !important; display: flex !important; flex-direction: column !important; align-items: center !important; justify-content: center !important; position: relative !important; padding-bottom: 48px !important;">
-                                        <svg style="width: 36px !important; height: 36px !important; color: #ef4444 !important;" fill="currentColor" viewBox="0 0 20 20">
-                                            <path fill-rule="evenodd" d="M4 4a2 2 0 012-2h4.586A1 1 0 0112 2.586L15.414 6A1 1 0 0116 6.707V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 6a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 100 2h6a1 1 0 100-2H7z" clip-rule="evenodd"></path>
-                                        </svg>
-                                        <span style="font-size: 8px !important; font-weight: 800 !important; color: #ef4444 !important; background: #fee2e2 !important; padding: 1px 6px !important; border-radius: 4px !important; text-transform: uppercase !important; letter-spacing: 0.05em !important; margin-top: 4px !important;">PDF Document</span>
-                                    </div>
+                                    <iframe src="{{ asset('storage/documents/' . auth()->id() . '/' . $fileName) }}#toolbar=0&navpanes=0&scrollbar=0" style="width: 100% !important; height: 100% !important; border: none !important; pointer-events: none !important; display: block !important;" frameborder="0"></iframe>
                                 @endif
                                 <div style="position: absolute !important; bottom: 0 !important; left: 0 !important; right: 0 !important; padding: 6px 12px !important; background: rgba(15, 23, 42, 0.88) !important; backdrop-filter: blur(12px) !important; -webkit-backdrop-filter: blur(12px) !important; border-top: 1px solid rgba(255, 255, 255, 0.15) !important; display: flex !important; align-items: center !important; justify-content: space-between !important; z-index: 10 !important; border-bottom-left-radius: 10px !important; border-bottom-right-radius: 10px !important;">
                                     <div style="display: flex !important; align-items: center !important; gap: 6px !important; min-width: 0 !important;">
