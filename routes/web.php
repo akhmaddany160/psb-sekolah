@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\StudentDetailController;
 use App\Http\Controllers\StudentDocumentController;
+use App\Http\Controllers\StudentTestController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
@@ -25,6 +26,11 @@ Route::middleware('auth')->group(function () {
     Route::get('/pemberkasan', [StudentDocumentController::class, 'edit'])->name('student.pemberkasan.edit');
     Route::post('/pemberkasan', [StudentDocumentController::class, 'store'])->name('student.pemberkasan.store');
     Route::delete('/pemberkasan/{type}', [StudentDocumentController::class, 'destroy'])->name('student.pemberkasan.destroy');
+
+    // Rute Ujian Seleksi & Hasil Seleksi
+    Route::get('/test-seleksi', [StudentTestController::class, 'showTest'])->name('student.test.show');
+    Route::post('/test-seleksi', [StudentTestController::class, 'submitTest'])->name('student.test.submit');
+    Route::get('/hasil-seleksi', [StudentTestController::class, 'showResults'])->name('student.test.results');
 });
 
 
