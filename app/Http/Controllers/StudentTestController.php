@@ -17,6 +17,11 @@ class StudentTestController extends Controller
             return redirect()->route('dashboard')->with('status', 'Silakan pilih jenjang sekolah terlebih dahulu sebelum memulai tes seleksi.');
         }
 
+        // 1.5. Cek apakah user sudah membayar formulir
+        if ($user->pembayaran_formulir !== 'LUNAS') {
+            return redirect()->route('student.pembayaran.formulir')->with('status', 'Silakan lunasi biaya pendaftaran & formulir terlebih dahulu untuk memulai tes seleksi.');
+        }
+
         // 2. Cek apakah user sudah pernah menyelesaikan tes
         $test = $user->studentTest;
         if ($test && $test->status !== 'BELUM_TES') {

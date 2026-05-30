@@ -44,6 +44,7 @@ class StudentTestTest extends TestCase
     {
         $user = User::factory()->create([
             'jenjang' => 'SMA',
+            'pembayaran_formulir' => 'LUNAS',
         ]);
 
         $response = $this->actingAs($user)->get(route('student.test.show'));
@@ -61,6 +62,7 @@ class StudentTestTest extends TestCase
     {
         $user = User::factory()->create([
             'jenjang' => 'SMA',
+            'pembayaran_formulir' => 'LUNAS',
         ]);
 
         $answers = [
@@ -88,6 +90,7 @@ class StudentTestTest extends TestCase
     {
         $user = User::factory()->create([
             'jenjang' => 'SD',
+            'pembayaran_formulir' => 'LUNAS',
         ]);
 
         // SD questions correct are: 1->B, 2->B, 3->B, 4->C.
@@ -117,6 +120,7 @@ class StudentTestTest extends TestCase
     {
         $user = User::factory()->create([
             'jenjang' => 'SMP',
+            'pembayaran_formulir' => 'LUNAS',
         ]);
 
         $response = $this->actingAs($user)->get(route('student.test.results'));
@@ -131,6 +135,7 @@ class StudentTestTest extends TestCase
     {
         $user = User::factory()->create([
             'jenjang' => 'SMP',
+            'pembayaran_formulir' => 'LUNAS',
         ]);
 
         StudentTest::create([

@@ -29,17 +29,25 @@
         </x-responsive-nav-link>
 
         {{-- Pembayaran Formulir --}}
-        <x-responsive-nav-link href="#" class="block w-full py-3 text-center border rounded-md opacity-60">
-            {{ __('Pembayaran Formulir') }}
-        </x-responsive-nav-link>
+        @php $active = request()->routeIs('student.pembayaran.formulir'); @endphp
+        @if($hasJenjang)
+            <x-responsive-nav-link :href="route('student.pembayaran.formulir')" :active="$active" class="block w-full py-3 text-center border rounded-md">
+                {{ __('Pembayaran Formulir') }}
+            </x-responsive-nav-link>
+        @else
+            <x-responsive-nav-link href="#" class="block w-full py-3 text-center border rounded-md opacity-60" onclick="alert('Silakan pilih jenjang sekolah terlebih dahulu di menu Jenjang Sekolah.')">
+                {{ __('Pembayaran Formulir') }}
+            </x-responsive-nav-link>
+        @endif
 
         {{-- Test Seleksi --}}
-        @if($hasJenjang)
+        @php $isFormulirLunas = $user->pembayaran_formulir === 'LUNAS'; @endphp
+        @if($hasJenjang && $isFormulirLunas)
             <x-responsive-nav-link :href="$hasTest ? route('student.test.results') : route('student.test.show')" :active="request()->routeIs('student.test.show')" class="block w-full py-3 text-center border rounded-md">
                 {{ __('Test Seleksi') }}
             </x-responsive-nav-link>
         @else
-            <x-responsive-nav-link href="#" class="block w-full py-3 text-center border rounded-md opacity-60" onclick="alert('Silakan pilih jenjang sekolah terlebih dahulu di menu Jenjang Sekolah.')">
+            <x-responsive-nav-link href="#" class="block w-full py-3 text-center border rounded-md opacity-60" onclick="alert($hasJenjang ? 'Silakan lunasi biaya pendaftaran & formulir terlebih dahulu untuk memulai tes.' : 'Silakan pilih jenjang sekolah terlebih dahulu di menu Jenjang Sekolah.')">
                 {{ __('Test Seleksi') }}
             </x-responsive-nav-link>
         @endif
@@ -56,8 +64,9 @@
         @endif
 
         {{-- Pembayaran Daftar Ulang --}}
+        @php $active = request()->routeIs('student.pembayaran.daftar_ulang'); @endphp
         @if($isLulus)
-            <x-responsive-nav-link href="#" class="block w-full py-3 text-center border rounded-md">
+            <x-responsive-nav-link :href="route('student.pembayaran.daftar_ulang')" :active="$active" class="block w-full py-3 text-center border rounded-md">
                 {{ __('Pembayaran Daftar Ulang') }}
             </x-responsive-nav-link>
         @else
@@ -67,12 +76,13 @@
         @endif
 
         {{-- Kartu Pelajar --}}
-        @if($isLulus)
+        @php $isDaftarUlangLunas = $user->pembayaran_daftar_ulang === 'LUNAS'; @endphp
+        @if($isLulus && $isDaftarUlangLunas)
             <x-responsive-nav-link href="#" class="block w-full py-3 text-center border rounded-md">
                 {{ __('Kartu Pelajar') }}
             </x-responsive-nav-link>
         @else
-            <x-responsive-nav-link href="#" class="block w-full py-3 text-center border rounded-md opacity-60" onclick="alert('Unduh Kartu Pelajar hanya terbuka jika Anda dinyatakan LULUS ujian seleksi.')">
+            <x-responsive-nav-link href="#" class="block w-full py-3 text-center border rounded-md opacity-60" onclick="alert($isLulus ? 'Silakan lunasi biaya pembayaran daftar ulang terlebih dahulu untuk mengunduh Kartu Pelajar.' : 'Unduh Kartu Pelajar hanya terbuka jika Anda dinyatakan LULUS ujian seleksi.')">
                 {{ __('Kartu Pelajar') }}
             </x-responsive-nav-link>
         @endif
