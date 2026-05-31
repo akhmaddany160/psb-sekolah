@@ -156,4 +156,47 @@ class PaymentTest extends TestCase
             'pembayaran_daftar_ulang' => 'LUNAS',
         ]);
     }
+
+    /**
+     * Test that Kartu Pelajar is locked if re-registration is unpaid.
+     */
+    public function test_kartu_pelajar_is_locked_if_unpaid(): void
+    {
+        $user = User::factory()->create([
+            'jenjang' => 'SMA',
+            'pembayaran_formulir' => 'LUNAS',
+            'pembayaran_daftar_ulang' => 'BELUM_BAYAR',
+        ]);
+
+        $response = $this->actingAs($user)->get(route('student.kartu_pelajar'));
+        $response->assertStatus(200);
+        $response->assertSee('Akses Kartu Terkunci');
+    }
+
+    /**
+     * Test that paid student can view Kartu Pelajar with details.
+     */
+    public function test_paid_student_can_view_kartu_pelajar(): void
+    {
+        $user = User::factory()->create([
+            'name' => 'Calon Siswa Teladan',
+            'jenjang' => 'SMA',
+            'pembayaran_formulir' => 'LUNAS',
+            'pembayaran_daftar_ulang' => 'LUNAS',
+        ]);
+
+        StudentTest::create([
+            'user_id' => $user->id,
+            'jenjang' => 'SMA',
+            'score' => 100,
+            'status' => 'LULUS',
+            'completed_at' => now(),
+        ]);
+
+        $response = $this->actingAs($user)->get(route('student.kartu_pelajar'));
+        $response->assertStatus(200);
+        $response->assertSee('Kartu Pelajar Digital');
+        $response->assertSee('Calon Siswa Teladan');
+        $response->assertSee('Al-Bayan School (SMP/SMA)');
+    }
 }

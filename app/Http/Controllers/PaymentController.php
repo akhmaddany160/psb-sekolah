@@ -92,4 +92,28 @@ class PaymentController extends Controller
 
         return redirect()->route('student.pembayaran.daftar_ulang')->with('success', 'Simulasi Pembayaran Sukses! Pembayaran daftar ulang Anda telah lunas dan diverifikasi oleh sistem.');
     }
+
+    /**
+     * Show the Kartu Pelajar UI page.
+     */
+    public function showKartuPelajar()
+    {
+        $user = Auth::user();
+
+        // Cek apakah user sudah memilih jenjang
+        if (empty($user->jenjang)) {
+            return redirect()->route('dashboard')->with('status', 'Silakan pilih jenjang sekolah terlebih dahulu.');
+        }
+
+        $test = $user->studentTest;
+        $isLulus = $test && $test->status === 'LULUS';
+        $isDaftarUlangLunas = $user->pembayaran_daftar_ulang === 'LUNAS';
+
+        $isLocked = !$isLulus || !$isDaftarUlangLunas;
+
+        $detail = $user->studentDetail;
+        $document = $user->studentDocument;
+
+        return view('student.kartu_pelajar', compact('user', 'isLocked', 'detail', 'document', 'test'));
+    }
 }

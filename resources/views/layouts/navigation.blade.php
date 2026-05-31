@@ -76,9 +76,10 @@
         @endif
 
         {{-- Kartu Pelajar --}}
+        @php $active = request()->routeIs('student.kartu_pelajar'); @endphp
         @php $isDaftarUlangLunas = $user->pembayaran_daftar_ulang === 'LUNAS'; @endphp
         @if($isLulus && $isDaftarUlangLunas)
-            <x-responsive-nav-link href="#" class="block w-full py-3 text-center border rounded-md">
+            <x-responsive-nav-link :href="route('student.kartu_pelajar')" :active="$active" class="block w-full py-3 text-center border rounded-md">
                 {{ __('Kartu Pelajar') }}
             </x-responsive-nav-link>
         @else

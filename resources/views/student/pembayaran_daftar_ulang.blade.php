@@ -82,8 +82,8 @@
                         </div>
 
                         <div style="display: flex; justify-content: center;">
-                            <a href="#" style="background-color: #1F2937; color: #ffffff; font-size: 16px; font-weight: 900; padding: 16px 40px; border-radius: 12px; text-decoration: none; text-transform: uppercase; letter-spacing: 0.5px; transition: all 0.2s ease; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);" onmouseover="this.style.backgroundColor='#10B981'" onmouseout="this.style.backgroundColor='#1F2937'">
-                                Unduh Kartu Pelajar
+                            <a href="{{ route('student.kartu_pelajar') }}" style="background-color: #1F2937; color: #ffffff; font-size: 16px; font-weight: 900; padding: 16px 40px; border-radius: 12px; text-decoration: none; text-transform: uppercase; letter-spacing: 0.5px; transition: all 0.2s ease; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);" onmouseover="this.style.backgroundColor='#10B981'" onmouseout="this.style.backgroundColor='#1F2937'">
+                                Lihat / Cetak Kartu Pelajar
                             </a>
                         </div>
                     </div>

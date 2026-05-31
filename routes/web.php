@@ -40,6 +40,9 @@ Route::middleware('auth')->group(function () {
     // Rute Pembayaran Daftar Ulang
     Route::get('/pembayaran-daftar-ulang', [PaymentController::class, 'showDaftarUlang'])->name('student.pembayaran.daftar_ulang');
     Route::post('/pembayaran-daftar-ulang/simulate', [PaymentController::class, 'simulateDaftarUlang'])->name('student.pembayaran.daftar_ulang.simulate');
+
+    // Rute Kartu Pelajar
+    Route::get('/kartu-pelajar', [PaymentController::class, 'showKartuPelajar'])->name('student.kartu_pelajar');
 });
 
 
