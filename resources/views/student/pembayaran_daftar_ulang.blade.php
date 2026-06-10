@@ -133,25 +133,48 @@
                         </div>
                     </div>
 
-                    {{-- Simulator Sandbox Panel --}}
-                    <div style="background-color: #ECFDF5; border: 2px dashed #10B981; border-radius: 20px; padding: 30px; text-align: center;">
-                        <div style="width: 48px; height: 48px; border-radius: 50%; background-color: #D1FAE5; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px auto;">
-                            <svg style="width: 24px; height: 24px; color: #10B981; fill: none; stroke: currentColor; stroke-width: 2.5;" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
-                        </div>
-                        
-                        <h4 style="font-size: 16px; font-weight: 900; color: #065F46; margin: 0 0 8px 0; text-transform: uppercase;">
-                            Simulasi Pembayaran Sandbox
+                    {{-- Metode Pembayaran Instan --}}
+                    <div style="background-color: #ffffff; border-radius: 20px; padding: 30px; box-shadow: 0 4px 6px rgba(0,0,0,0.02); text-align: center; border: 1px solid #E5E7EB;">
+                        <h4 style="font-size: 15px; font-weight: 900; color: #1F2937; margin: 0 0 20px 0; text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 2px solid #F3F4F6; padding-bottom: 12px;">
+                            Pilihan Metode Pembayaran Resmi
                         </h4>
-                        <p style="font-size: 13px; color: #047857; line-height: 1.5; max-width: 480px; margin: 0 auto 24px auto; font-weight: 600;">
-                            Klik tombol di bawah ini untuk mensimulasikan pembayaran daftar ulang sukses. Fitur uji coba ini gratis.
-                        </p>
 
-                        <form method="POST" action="{{ route('student.pembayaran.daftar_ulang.simulate') }}">
-                            @csrf
-                            <button type="submit" id="pay-ulang-btn" style="background-color: #10B981; color: #ffffff; font-size: 15px; font-weight: 900; padding: 14px 36px; border: none; border-radius: 12px; cursor: pointer; text-transform: uppercase; letter-spacing: 0.5px; transition: all 0.2s ease; box-shadow: 0 4px 6px rgba(16, 185, 129, 0.2);">
-                                Bayar via Simulator (Lunas)
-                            </button>
-                        </form>
+                        <div style="display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; align-items: stretch;">
+                            
+                            {{-- Pilihan 1: QRIS --}}
+                            <div style="flex: 1; min-width: 250px; background-color: #F9FAFB; border: 1px solid #E5E7EB; border-radius: 16px; padding: 20px; box-sizing: border-box; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+                                <span style="font-weight: 900; font-size: 14px; color: #1F2937; margin-bottom: 12px; text-transform: uppercase;">Metode A: Scan QRIS</span>
+                                <img src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=http://192.168.1.4:5678/webhook/pembayaran-webhook?user_id={{ $user->id }}%26payment_type=daftar_ulang" alt="QRIS Code" style="width: 160px; height: 160px; border-radius: 8px; border: 1px solid #E5E7EB; margin-bottom: 12px;">
+                                <p style="font-size: 12px; color: #6B7280; margin: 0; line-height: 1.4; font-weight: 600;">
+                                    Pindai kode QRIS di atas menggunakan e-wallet (GoPay, OVO, Dana) atau aplikasi mobile banking Anda.
+                                </p>
+                            </div>
+
+                            {{-- Pilihan 2: Virtual Account --}}
+                            <div style="flex: 1; min-width: 250px; background-color: #F9FAFB; border: 1px solid #E5E7EB; border-radius: 16px; padding: 20px; box-sizing: border-box; display: flex; flex-direction: column; justify-content: center; text-align: left;">
+                                <span style="font-weight: 900; font-size: 14px; color: #1F2937; margin-bottom: 12px; text-transform: uppercase; text-align: center; display: block;">Metode B: Virtual Account</span>
+                                
+                                <div style="margin-bottom: 12px;">
+                                    <span style="font-size: 11px; color: #6B7280; font-weight: 700; text-transform: uppercase; display: block;">Nama Bank</span>
+                                    <span style="font-size: 14px; color: #1F2937; font-weight: 900;">Bank Mandiri (Mandiri VA)</span>
+                                </div>
+
+                                <div style="margin-bottom: 12px; background-color: #EEF2F6; padding: 10px; border-radius: 8px; border: 1px solid #DCE4EC;">
+                                    <span style="font-size: 11px; color: #6B7280; font-weight: 700; text-transform: uppercase; display: block;">Nomor Virtual Account</span>
+                                    <span style="font-size: 18px; color: #1E3A8A; font-weight: 900; letter-spacing: 1px;">8802909{{ str_pad($user->id, 5, '0', STR_PAD_LEFT) }}</span>
+                                </div>
+
+                                <div style="margin-bottom: 12px;">
+                                    <span style="font-size: 11px; color: #6B7280; font-weight: 700; text-transform: uppercase; display: block;">Nama Rekening</span>
+                                    <span style="font-size: 13px; color: #1F2937; font-weight: 800;">Daftar Ulang Abu Dzar ({{ $user->name }})</span>
+                                </div>
+                                
+                                <p style="font-size: 12px; color: #EF4444; margin: 0; line-height: 1.4; font-weight: 700; text-align: center; border-top: 1px solid #E5E7EB; padding-top: 10px;">
+                                    *Status diperbarui otomatis oleh server otomatisasi n8n setelah transfer Anda diverifikasi.
+                                </p>
+                            </div>
+
+                        </div>
                     </div>
 
                 @endif
@@ -167,4 +190,18 @@
             transform: scale(1.02);
         }
     </style>
+
+    <script>
+        // Polling status pembayaran setiap 2 detik
+        setInterval(function() {
+            fetch("{{ route('payment.check_status') }}")
+                .then(response => response.json())
+                .then(data => {
+                    if (data.pembayaran_daftar_ulang === 'LUNAS') {
+                        window.location.reload();
+                    }
+                })
+                .catch(error => console.error('Error checking payment status:', error));
+        }, 2000);
+    </script>
 </x-app-layout>

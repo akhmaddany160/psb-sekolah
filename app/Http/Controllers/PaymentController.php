@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Models\User;
+use Illuminate\Support\Facades\Log;
 
 class PaymentController extends Controller
 {
@@ -115,5 +117,78 @@ class PaymentController extends Controller
         $document = $user->studentDocument;
 
         return view('student.kartu_pelajar', compact('user', 'isLocked', 'detail', 'document', 'test'));
+    }
+
+    /**
+     * Handle incoming secure payment webhook from n8n.
+     */
+    public function handleWebhook(Request $request)
+    {
+        // 1. Validasi Token Keamanan
+        $expectedToken = env('WEBHOOK_TOKEN', 'secure_n8n_token_default');
+        $incomingToken = $request->header('X-Webhook-Token');
+
+        if ($incomingToken !== $expectedToken) {
+            Log::warning('Percobaan akses webhook tidak sah (Token salah/kosong).');
+            return response()->json(['message' => 'Unauthorized'], 401);
+        }
+
+        // 2. Validasi Input Payload
+        $request->validate([
+            'user_id' => 'required|integer|exists:users,id',
+            'payment_type' => 'required|string|in:formulir,daftar_ulang',
+            'status' => 'required|string|in:LUNAS',
+        ]);
+
+        // 3. Update Status Pembayaran Siswa
+        $user = User::findOrFail($request->user_id);
+        
+        if ($request->payment_type === 'formulir') {
+            $user->pembayaran_formulir = 'LUNAS';
+            Log::info("Pembayaran Formulir sukses via n8n untuk siswa ID: {$user->id}");
+        } elseif ($request->payment_type === 'daftar_ulang') {
+            $user->pembayaran_daftar_ulang = 'LUNAS';
+            Log::info("Pembayaran Daftar Ulang sukses via n8n untuk siswa ID: {$user->id}");
+        }
+
+        $user->save();
+
+        // Ambil nomor WA dari studentDetail, atau phone_number dari tabel users
+        $phone = $user->studentDetail->no_wa ?? $user->phone_number ?? '';
+        
+        // Bersihkan format nomor agar hanya angka
+        $phone = preg_replace('/[^0-9]/', '', $phone);
+        
+        // Pastikan diawali dengan 62 (standar WhatsApp internasional)
+        if (str_starts_with($phone, '08')) {
+            $phone = '628' . substr($phone, 2);
+        } elseif (str_starts_with($phone, '8')) {
+            $phone = '628' . substr($phone, 1);
+        }
+
+        return response()->json([
+            'message' => 'Status pembayaran berhasil diperbarui!',
+            'student_id' => $user->id,
+            'student_name' => $user->name,
+            'student_phone' => $phone,
+            'pembayaran_formulir' => $user->pembayaran_formulir,
+            'pembayaran_daftar_ulang' => $user->pembayaran_daftar_ulang,
+        ], 200);
+    }
+
+    /**
+     * Check current logged-in user's payment status.
+     */
+    public function checkStatus()
+    {
+        $user = Auth::user();
+        if (!$user) {
+            return response()->json(['status' => 'UNAUTHENTICATED'], 401);
+        }
+        
+        return response()->json([
+            'pembayaran_formulir' => $user->pembayaran_formulir,
+            'pembayaran_daftar_ulang' => $user->pembayaran_daftar_ulang,
+        ], 200);
     }
 }

@@ -43,7 +43,12 @@ Route::middleware('auth')->group(function () {
 
     // Rute Kartu Pelajar
     Route::get('/kartu-pelajar', [PaymentController::class, 'showKartuPelajar'])->name('student.kartu_pelajar');
+
+    // Rute Status Check Pembayaran (Polling)
+    Route::get('/payment/check-status', [PaymentController::class, 'checkStatus'])->name('payment.check_status');
 });
+
+Route::post('/payment/webhook', [PaymentController::class, 'handleWebhook'])->name('payment.webhook');
 
 
 
